@@ -7,7 +7,15 @@ const Account = new Schema(
     _id: { type: String, required: true },
     email: { type: String, lowercase: true, unique: true },
     name: { type: String, required: true },
-    picture: { type: String }
+    picture: { type: String },
+    games: { type: String },
+    platforms: { type: String },
+    tvshowsandmovies: { type: String },
+    hobbiesandinterests: { type: String },
+    about: { type: String },
+    lookingFor: { type: String },
+    contact: { type: String }
+
     // NOTE If you wish to add additional public properties for Accounts do so here
   },
   { timestamps: true, _id: false, toJSON: { virtuals: true } }
