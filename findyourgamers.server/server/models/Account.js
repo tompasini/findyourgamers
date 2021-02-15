@@ -13,8 +13,7 @@ const Account = new Schema(
     tvshowsandmovies: { type: String },
     hobbiesandinterests: { type: String },
     about: { type: String },
-    lookingFor: { type: String },
-    contact: { type: String }
+    lookingFor: { type: String }
 
     // NOTE If you wish to add additional public properties for Accounts do so here
   },
