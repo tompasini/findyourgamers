@@ -1,4 +1,5 @@
 import { dbContext } from '../db/DbContext'
+import { BadRequest } from '../utils/Errors'
 
 // Private Methods
 
@@ -10,6 +11,7 @@ import { dbContext } from '../db/DbContext'
 async function createAccountIfNeeded(account, user) {
   if (!account) {
     user._id = user.id
+    user.name = user.nickname
     account = await dbContext.Account.create({
       ...user,
       subs: [user.sub]
@@ -75,6 +77,16 @@ class AccountService {
       .select('name email picture')
   }
 
+  // get methods
+
+  async getAllAccounts() {
+    return await dbContext.Account.find()
+  }
+
+  async getActiveAccount(accountId) {
+    return await dbContext.Account.findById(accountId)
+  }
+
   /**
    * Returns a user account from the Auth0 user object
    *
@@ -90,6 +102,17 @@ class AccountService {
     account = await createAccountIfNeeded(account, user)
     await mergeSubsIfNeeded(account, user)
     return account
+  }
+
+  // post, put, and delete methods.
+
+  async editResponses(body, accountId, userId) {
+    // if (accountId !== userId) {
+    //   throw new BadRequest('Not your profile :)')
+    // }
+    // return dbContext.Account.findByIdAndUpdate(accountId, body, { new: true })
+
+    return accountId === userId ? dbContext.Account.findByIdAndUpdate(accountId, body, { new: true }) : new BadRequest('Not your profile :)')
   }
 
   /**

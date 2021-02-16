@@ -8,12 +8,12 @@ const Account = new Schema(
     email: { type: String, lowercase: true, unique: true },
     name: { type: String, required: true },
     picture: { type: String },
-    games: { type: String },
-    platforms: { type: String },
-    tvshowsandmovies: { type: String },
-    hobbiesandinterests: { type: String },
-    about: { type: String },
-    lookingFor: { type: String }
+    games: { type: String, default: '' },
+    platforms: { type: String, default: '' },
+    tvshowsandmovies: { type: String, default: '' },
+    hobbiesandinterests: { type: String, default: '' },
+    about: { type: String, default: '' },
+    lookingFor: { type: String, default: '' }
 
     // NOTE If you wish to add additional public properties for Accounts do so here
   },
