@@ -33,6 +33,16 @@ class AccountService {
   }
 
   // post, put, and delete methods
+
+  async editResponses(responses, userId) {
+    try {
+      const res = await api.put('api/accounts/' + userId, responses)
+      logger.log(res.data)
+      AppState.account.responses = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 }
 
 export const accountService = new AccountService()

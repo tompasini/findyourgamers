@@ -1,9 +1,23 @@
 <template>
   <div class="activeAccount container-fluid">
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <img :src="activeAccount.picture" alt="account picture">
         <h1>{{ activeAccount.name }}</h1>
+      </div>
+      <div class="col-6">
+        <h4>What games do you like to play?</h4>
+        <p>{{ activeAccount.games }}</p>
+        <h4>What platforms do you game on? i.e Steam</h4>
+        <p>{{ activeAccount.platforms }}</p>
+        <h4>What TV shows and movies do you like? Anime included.</h4>
+        <p>{{ activeAccount.tvshowsandmovies }}</p>
+        <h4>What other hobbies and interests do you have?</h4>
+        <p>{{ activeAccount.hobbiesandinterests }}</p>
+        <h4>Anything else you want to say about yourself?</h4>
+        <p>{{ activeAccount.about }}</p>
+        <h4>What are you looking for on this site?</h4>
+        <p>{{ activeAccount.lookingFor }}</p>
       </div>
     </div>
   </div>
