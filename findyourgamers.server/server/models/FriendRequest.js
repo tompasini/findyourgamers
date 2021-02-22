@@ -1,13 +1,12 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
-const ObjectId = Schema.Types.ObjectId
 
 const FriendRequest = new Schema(
   {
-    accountId: { type: ObjectId, ref: 'Account', required: true },
-    requestorId: { type: ObjectId, ref: 'Account', required: true },
+    accountId: { type: String, ref: 'Account', required: true },
+    requestorId: { type: String, ref: 'Account' },
     isAccepted: { type: Boolean }
-  }
+  },
+  { timestamps: true, id: true, toJSON: { virtuals: true } }
 )
-
 export default FriendRequest

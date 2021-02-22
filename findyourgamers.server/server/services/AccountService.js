@@ -112,7 +112,7 @@ class AccountService {
     // }
     // return dbContext.Account.findByIdAndUpdate(accountId, body, { new: true })
 
-    return accountId === userId ? dbContext.Account.findByIdAndUpdate(accountId, body, { new: true }) : new BadRequest('Not your profile :)')
+    return await accountId === userId ? dbContext.Account.findByIdAndUpdate(accountId, body, { new: true }) : new BadRequest('Not your profile :)')
   }
 
   /**
