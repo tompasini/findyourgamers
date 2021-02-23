@@ -5,6 +5,8 @@ const FriendRequest = new Schema(
   {
     accountId: { type: String, ref: 'Account', required: true },
     requestorId: { type: String, ref: 'Account' },
+    requestorName: { type: String },
+    requestorPicture: { type: String },
     isAccepted: { type: Boolean }
   },
   { timestamps: true, id: true, toJSON: { virtuals: true } }

@@ -1,5 +1,5 @@
 <template>
-  <div @click.stop="getActiveAccount(account.id)" class="accountComponent col-md-3 pointer m-5">
+  <div @click.stop="getActiveAccount(account.id)" class="account-component col-md-3 pointer m-5">
     <img class="img-fluid" :src="account.picture" alt="account picture">
     <h3>{{ account.name }}</h3>
   </div>

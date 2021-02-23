@@ -7,16 +7,29 @@ export class FriendController extends BaseController {
     super('api/friends')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .get('/friendrequests', this.getUserFriendRequests)
       .post('', this.sendFriendRequest)
   }
 
   // get methods
 
+  async getUserFriendRequests(req, res, next) {
+    try {
+      const friendRequests = await friendService.getUserFriendRequests(req.userInfo.id)
+      res.send(friendRequests)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   // post, put, and delete methods
 
   async sendFriendRequest(req, res, next) {
     try {
-      const friendRequest = await friendService.sendFriendRequest(req.userInfo, req.body)
+      req.body.requestorId = req.userInfo.id
+      req.body.requestorName = req.userInfo.nickname
+      req.body.requestorPicture = req.userInfo.picture
+      const friendRequest = await friendService.sendFriendRequest(req.body)
       res.send(friendRequest)
     } catch (error) {
       next(error)

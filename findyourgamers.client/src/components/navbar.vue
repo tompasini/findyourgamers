@@ -23,6 +23,11 @@
             About
           </router-link>
         </li>
+        <li v-if="account.id" class="nav-item">
+          <router-link :to="{ name: 'FriendRequests' }" class="nav-link">
+            Friend Requests
+          </router-link>
+        </li>
       </ul>
       <span class="navbar-text">
         <button
@@ -82,6 +87,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },
