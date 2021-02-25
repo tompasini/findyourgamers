@@ -7,11 +7,23 @@ export class FriendController extends BaseController {
     super('api/friends')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
+      .get('', this.getUserFriends)
       .get('/friendrequests', this.getUserFriendRequests)
       .post('', this.sendFriendRequest)
+      .put('/friendrequests/approve/:friendRequestId', this.approveFriendRequest)
+      .put('/friendrequests/deny/:friendRequestId', this.denyFriendRequest)
   }
 
   // get methods
+
+  async getUserFriends(req, res, next) {
+    try {
+      const friends = await friendService.getUserFriends(req.userInfo.id)
+      res.send(friends)
+    } catch (error) {
+      next(error)
+    }
+  }
 
   async getUserFriendRequests(req, res, next) {
     try {
@@ -31,6 +43,24 @@ export class FriendController extends BaseController {
       req.body.requestorPicture = req.userInfo.picture
       const friendRequest = await friendService.sendFriendRequest(req.body)
       res.send(friendRequest)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async approveFriendRequest(req, res, next) {
+    try {
+      const approved = await friendService.approveFriendRequest(req.params.friendRequestId)
+      res.send(approved)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async denyFriendRequest(req, res, next) {
+    try {
+      const denied = await friendService.denyFriendRequest(req.params.friendRequestId)
+      res.send(denied)
     } catch (error) {
       next(error)
     }
