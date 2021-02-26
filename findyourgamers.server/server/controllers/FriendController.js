@@ -10,8 +10,8 @@ export class FriendController extends BaseController {
       .get('', this.getUserFriends)
       .get('/friendrequests', this.getUserFriendRequests)
       .post('', this.sendFriendRequest)
-      .put('/friendrequests/approve/:friendRequestId', this.approveFriendRequest)
-      .put('/friendrequests/deny/:friendRequestId', this.denyFriendRequest)
+      .put('/friendRequests/approve/:friendRequestId', this.approveFriendRequest)
+      .put('/friendRequests/deny/:friendRequestId', this.denyFriendRequest)
   }
 
   // get methods

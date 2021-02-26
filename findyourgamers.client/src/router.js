@@ -33,6 +33,12 @@ const routes = [
     name: 'FriendRequests',
     component: loadPage('FriendRequestsPage'),
     beforeEnter: authGuard
+  },
+  {
+    path: '/myfriends',
+    name: 'MyFriends',
+    component: loadPage('MyFriendsPage'),
+    beforeEnter: authGuard
   }
 ]
 

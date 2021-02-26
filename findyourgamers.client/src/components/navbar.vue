@@ -28,6 +28,11 @@
             Friend Requests
           </router-link>
         </li>
+        <li v-if="account.id" class="nav-item">
+          <router-link :to="{ name: 'MyFriends' }" class="nav-link">
+            My Friends
+          </router-link>
+        </li>
       </ul>
       <span class="navbar-text">
         <button

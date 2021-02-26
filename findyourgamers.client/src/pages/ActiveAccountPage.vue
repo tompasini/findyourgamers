@@ -4,6 +4,9 @@
       <div class="col-6">
         <img :src="activeAccount.picture" alt="account picture">
         <h1>{{ activeAccount.name }}</h1>
+        <button @click="sendFriendRequest" class="btn btn-primary">
+          Add Friend
+        </button>
       </div>
       <div class="col-6">
         <h4>What games do you like to play?</h4>
@@ -28,6 +31,7 @@ import { computed, onMounted } from 'vue'
 import { accountService } from '../services/AccountService'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+import { friendService } from '../services/FriendService'
 export default {
   name: 'ActiveAccount',
   setup() {
@@ -36,7 +40,10 @@ export default {
       accountService.getActiveAccount(route.params.id)
     })
     return {
-      activeAccount: computed(() => AppState.activeAccount)
+      activeAccount: computed(() => AppState.activeAccount),
+      sendFriendRequest() {
+        friendService.sendFriendRequest(route.params.id)
+      }
     }
   },
   components: {}
