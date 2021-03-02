@@ -11,9 +11,11 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: $body-bg;
+  background-color: rgb(75, 75, 75);
+  color: rgb(243, 236, 236);
   overflow-x: hidden;
   scroll-behavior: smooth;
+  font-family: 'Signika', sans-serif;
 }
 
 main {

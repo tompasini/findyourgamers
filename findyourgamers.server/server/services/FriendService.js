@@ -5,9 +5,12 @@ class FriendService {
   // get methods
 
   async getUserFriends(userId) {
+    // finds the user's friend connections
     const friendConnections = await dbContext.FriendConnection.find({ accountId1: userId } || { accountId2: userId })
+    // creates collections for the the friendIds, and friends which will store the friend accounts
     const friendIds = []
     const friends = []
+    // iterates through the friend connections, and pushes all accountId1's and accountId2's that aren't the user's id into the friendIds array. In other words, their friends.
     for (let i = 0; i < friendConnections.length; i++) {
       if (friendConnections[i]._doc.accountId1 !== userId) {
         friendIds.push(friendConnections[i]._doc.accountId1)
@@ -16,6 +19,7 @@ class FriendService {
         friendIds.push(friendConnections[i]._doc.accountId2)
       }
     }
+    // iterates through the friendIds array, finds the account by each id, and pushes that account into the friends array. The friends array is then returned, ending the function.
     for (let i = 0; i < friendIds.length; i++) {
       const friend = await dbContext.Account.findById(friendIds[i])
       friends.push(friend)
