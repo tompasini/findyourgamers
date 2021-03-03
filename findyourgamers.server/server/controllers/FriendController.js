@@ -1,6 +1,7 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import BaseController from '../utils/BaseController'
 import { friendService } from '../services/FriendService'
+import { accountService } from '../services/AccountService'
 
 export class FriendController extends BaseController {
   constructor() {
@@ -8,7 +9,8 @@ export class FriendController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserFriends)
-      .get('/friendrequests', this.getUserFriendRequests)
+      .get('/incomingFriendRequests', this.getIncomingUserFriendRequests)
+      .get('/outgoingFriendRequests', this.getOutgoingUserFriendRequests)
       .post('', this.sendFriendRequest)
       .put('/friendRequests/approve/:friendRequestId', this.approveFriendRequest)
       .put('/friendRequests/deny/:friendRequestId', this.denyFriendRequest)
@@ -25,10 +27,19 @@ export class FriendController extends BaseController {
     }
   }
 
-  async getUserFriendRequests(req, res, next) {
+  async getIncomingUserFriendRequests(req, res, next) {
     try {
-      const friendRequests = await friendService.getUserFriendRequests(req.userInfo.id)
-      res.send(friendRequests)
+      const incomingFriendRequests = await friendService.getIncomingUserFriendRequests(req.userInfo.id)
+      res.send(incomingFriendRequests)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getOutgoingUserFriendRequests(req, res, next) {
+    try {
+      const outgoingFriendRequests = await friendService.getOutgoingUserFriendRequests(req.userInfo.id)
+      res.send(outgoingFriendRequests)
     } catch (error) {
       next(error)
     }
@@ -41,6 +52,9 @@ export class FriendController extends BaseController {
       req.body.requestorId = req.userInfo.id
       req.body.requestorName = req.userInfo.nickname
       req.body.requestorPicture = req.userInfo.picture
+      const account = await accountService.getActiveAccount(req.body.accountId)
+      req.body.accountName = account.name
+      req.body.accountPicture = account.picture
       const friendRequest = await friendService.sendFriendRequest(req.body)
       res.send(friendRequest)
     } catch (error) {

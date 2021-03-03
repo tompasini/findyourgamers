@@ -6,6 +6,7 @@ export const AppState = reactive({
   account: {},
   accounts: [],
   activeAccount: {},
-  friendRequests: [],
+  incomingFriendRequests: [],
+  outgoingFriendRequests: [],
   friends: []
 })

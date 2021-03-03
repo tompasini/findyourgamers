@@ -4,8 +4,11 @@
       <div class="col-6">
         <img :src="activeAccount.picture" alt="account picture">
         <h1>{{ activeAccount.name }}</h1>
-        <button @click="sendFriendRequest" class="btn btn-primary">
+        <button v-if="!currentFriend && !currentFriendRequest" @click="sendFriendRequest" class="btn btn-primary">
           Add Friend
+        </button>
+        <button v-if="currentFriendRequest" disabled class="btn btn-primary">
+          Pending
         </button>
       </div>
       <div class="col-6">
@@ -41,6 +44,9 @@ export default {
     })
     return {
       activeAccount: computed(() => AppState.activeAccount),
+      friends: computed(() => AppState.friends),
+      currentFriend: computed(() => AppState.friends.find(friend => friend.id === AppState.activeAccount.id)),
+      currentFriendRequest: computed(() => AppState.outgoingFriendRequests.find(request => request.accountId === AppState.activeAccount.id)),
       sendFriendRequest() {
         friendService.sendFriendRequest(route.params.id)
       }

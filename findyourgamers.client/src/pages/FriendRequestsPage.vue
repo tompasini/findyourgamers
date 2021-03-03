@@ -2,28 +2,32 @@
   <div class="FriendRequests container-fluid">
     <div class="row">
       <div class="col-12">
-        <friend-request-component v-for="friendRequest in friendRequests" :key="friendRequest.id" :friend-request-prop="friendRequest" />
+        <h2>Incoming Friend Requests:</h2>
       </div>
+      <incoming-friend-request-component v-for="friendRequest in incomingFriendRequests" :key="friendRequest.id" :friend-request-prop="friendRequest" />
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h2>Outgoing Friend Requests:</h2>
+      </div>
+      <outgoing-friend-request-component v-for="friendRequest in outgoingFriendRequests" :key="friendRequest.id" :friend-request-prop="friendRequest" />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
-import { friendService } from '../services/FriendService'
+import { computed } from 'vue'
 import { AppState } from '../AppState'
-import FriendRequestComponent from '../components/FriendRequestComponent.vue'
+import OutgoingFriendRequestComponent from '../components/OutgoingFriendRequestComponent.vue'
 export default {
+  components: { OutgoingFriendRequestComponent },
   name: 'FriendRequests',
   setup() {
-    onMounted(() => {
-      friendService.getUserFriendRequests()
-    })
     return {
-      friendRequests: computed(() => AppState.friendRequests)
+      incomingFriendRequests: computed(() => AppState.incomingFriendRequests),
+      outgoingFriendRequests: computed(() => AppState.outgoingFriendRequests)
     }
-  },
-  components: { FriendRequestComponent }
+  }
 }
 </script>
 

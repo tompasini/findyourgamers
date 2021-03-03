@@ -7,15 +7,11 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
-import { friendService } from '../services/FriendService'
+import { computed } from 'vue'
 import { AppState } from '../AppState'
 export default {
   name: 'MyFriends',
   setup() {
-    onMounted(() => {
-      friendService.getUserFriends()
-    })
     return {
       friends: computed(() => AppState.friends)
     }

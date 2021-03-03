@@ -4,6 +4,7 @@ import { audience, clientId, domain } from '../AuthConfig'
 import router from '../router'
 import { setBearer } from './AxiosService'
 import { accountService } from './AccountService'
+import { friendService } from './FriendService'
 
 export const AuthService = initialize({
   domain,
@@ -23,4 +24,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   await accountService.getAccount()
   AppState.user = AuthService.user
   accountService.getAllAccounts()
+  friendService.getUserFriends()
+  friendService.getIncomingUserFriendRequests()
+  friendService.getOutgoingUserFriendRequests()
 })

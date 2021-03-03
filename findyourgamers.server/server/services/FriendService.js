@@ -27,8 +27,12 @@ class FriendService {
     return friends
   }
 
-  async getUserFriendRequests(userId) {
+  async getIncomingUserFriendRequests(userId) {
     return await dbContext.FriendRequest.find({ accountId: userId, isApproved: undefined })
+  }
+
+  async getOutgoingUserFriendRequests(userId) {
+    return await dbContext.FriendRequest.find({ requestorId: userId, isApproved: undefined })
   }
 
   async getFriendRequest(friendRequestId) {

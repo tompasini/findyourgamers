@@ -5,13 +5,18 @@ import { api } from './AxiosService'
 class FriendService {
   // get methods
 
-  async getUserFriendRequests() {
+  async getIncomingUserFriendRequests() {
     try {
-      const res = await api.get('api/friends/friendrequests')
-      AppState.friendRequests = res.data
+      const res = await api.get('api/friends/incomingFriendRequests')
+      AppState.incomingFriendRequests = res.data
     } catch (error) {
       logger(error)
     }
+  }
+
+  async getOutgoingUserFriendRequests() {
+    const res = await api.get('api/friends/outgoingFriendRequests')
+    AppState.outgoingFriendRequests = res.data
   }
 
   async getUserFriends() {

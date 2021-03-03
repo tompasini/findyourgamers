@@ -1,5 +1,5 @@
 <template>
-  <div class="friend-request-component col-12">
+  <div class="incoming-friend-request-component col-12">
     <img class="img-fluid" :src="friendRequest.requestorPicture" alt="picture">
     <h3>{{ friendRequest.requestorName }}</h3>
     <div v-if="!friendRequest.isApproved">
@@ -17,7 +17,7 @@
 import { computed } from 'vue'
 import { friendService } from '../services/FriendService'
 export default {
-  name: 'FriendRequestComponent',
+  name: 'IncomingFriendRequestComponent',
   props: {
     friendRequestProp: Object
   },
