@@ -2,12 +2,14 @@
   <div class="activeAccount container-fluid">
     <div class="row">
       <div class="col-6">
-        <img :src="activeAccount.picture" alt="account picture">
+        <img class="img-fluid" :src="activeAccount.picture" alt="account picture">
         <h1>{{ activeAccount.name }}</h1>
-        <button v-if="!currentFriend && !currentFriendRequest" @click="sendFriendRequest" class="btn btn-primary">
-          Add Friend
-        </button>
-        <button v-if="currentFriendRequest" disabled class="btn btn-primary">
+        <div @click="refreshPage">
+          <button v-if="!currentFriend && (!outgoingFriendRequest && !incomingFriendRequest)" @click="sendFriendRequest" class="btn btn-primary">
+            Add Friend
+          </button>
+        </div>
+        <button v-if="outgoingFriendRequest || incomingFriendRequest" disabled class="btn btn-primary">
           Pending
         </button>
       </div>
@@ -46,9 +48,13 @@ export default {
       activeAccount: computed(() => AppState.activeAccount),
       friends: computed(() => AppState.friends),
       currentFriend: computed(() => AppState.friends.find(friend => friend.id === AppState.activeAccount.id)),
-      currentFriendRequest: computed(() => AppState.outgoingFriendRequests.find(request => request.accountId === AppState.activeAccount.id)),
+      outgoingFriendRequest: computed(() => AppState.outgoingFriendRequests.find(request => request.accountId === AppState.activeAccount.id)),
+      incomingFriendRequest: computed(() => AppState.incomingFriendRequests.find(request => request.requestorId === AppState.activeAccount.id)),
       sendFriendRequest() {
         friendService.sendFriendRequest(route.params.id)
+      },
+      refreshPage() {
+        window.location.reload()
       }
     }
   },
@@ -57,5 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+img {
+  max-width: 100px;
+}
 </style>

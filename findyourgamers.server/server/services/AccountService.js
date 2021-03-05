@@ -79,8 +79,9 @@ class AccountService {
 
   // get methods
 
-  async getAllAccounts() {
-    return await dbContext.Account.find()
+  async getAllAccounts(userId) {
+    const allAccounts = await dbContext.Account.find()
+    return allAccounts.filter(account => account._doc._id !== userId)
   }
 
   async getActiveAccount(accountId) {
@@ -106,12 +107,7 @@ class AccountService {
 
   // post, put, and delete methods.
 
-  async editResponses(body, accountId, userId) {
-    // if (accountId !== userId) {
-    //   throw new BadRequest('Not your profile :)')
-    // }
-    // return dbContext.Account.findByIdAndUpdate(accountId, body, { new: true })
-
+  async editAccount(body, accountId, userId) {
     return await accountId === userId ? dbContext.Account.findByIdAndUpdate(accountId, body, { new: true }) : new BadRequest('Not your profile :)')
   }
 

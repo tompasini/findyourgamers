@@ -6,7 +6,11 @@ class FriendService {
 
   async getUserFriends(userId) {
     // finds the user's friend connections
-    const friendConnections = await dbContext.FriendConnection.find({ accountId1: userId } || { accountId2: userId })
+    const friendConnections = await dbContext.FriendConnection.find({
+      $and: [
+        { $or: [{ accountId1: userId }, { accountId2: userId }] }
+      ]
+    })
     // creates collections for the the friendIds, and friends which will store the friend accounts
     const friendIds = []
     const friends = []

@@ -24,9 +24,5 @@ export default {
 .home{
   text-align: center;
   user-select: none;
-  > img{
-    height: 200px;
-    width: 200px;
-  }
 }
 </style>

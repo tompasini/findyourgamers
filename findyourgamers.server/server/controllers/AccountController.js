@@ -10,14 +10,14 @@ export class AccountController extends BaseController {
       .get('', this.getAllAccounts)
       .get('/myaccount', this.getUserAccount)
       .get('/:accountId', this.getActiveAccount)
-      .put('/:accountId', this.editResponses)
+      .put('/:accountId', this.editAccount)
   }
 
   // get methods
 
   async getAllAccounts(req, res, next) {
     try {
-      const accounts = await accountService.getAllAccounts()
+      const accounts = await accountService.getAllAccounts(req.userInfo.id)
       res.send(accounts)
     } catch (error) {
       next(error)
@@ -44,9 +44,9 @@ export class AccountController extends BaseController {
 
   // post, put, and delete methods
 
-  async editResponses(req, res, next) {
+  async editAccount(req, res, next) {
     try {
-      const editedAccount = await accountService.editResponses(req.body, req.params.accountId, req.userInfo.id)
+      const editedAccount = await accountService.editAccount(req.body, req.params.accountId, req.userInfo.id)
       res.send(editedAccount)
     } catch (error) {
       next(error)
